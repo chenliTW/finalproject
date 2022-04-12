@@ -24,7 +24,7 @@ public class test_data {
             }
     };
 
-    public static String[] getHistoryTestDate(){
+    public static String[] getHistoryTestDates(){
 
         try {
             SSLContext sslContext = SSLContext.getInstance("TLS");
@@ -42,5 +42,25 @@ public class test_data {
         }
 
     }
-    
+
+    public static String[] getTestProblems(String testDate){
+        try {
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustAllCerts, new SecureRandom());
+            HttpClient httpClient=HttpClient.newBuilder().sslContext(sslContext).build();
+            HttpRequest request= HttpRequest.newBuilder().uri(URI.create("https://cpe.cse.nsysu.edu.tw/cpe/test_data/"+testDate)).GET().build();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            String res=response.body().toString().split("<th><center>考生答對率 \\(F\\)</center></th>")[1].split("</table>")[0];
+            res=res.replaceAll("<tr>[\\s\\S]*?pdf\">([\\s\\S]*?)<\\/a>[\\s\\S]*?<\\/tr>","$1");
+            res=res.replaceAll(" ","");
+            res=res.replaceAll("\t","");
+            res=res.replaceAll("[\\s]*([0-9]*?\\:[[a-z][A-Z]]*)[\\s]*","$1\n");
+            String[] ret=res.split("\n");
+            return ret;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+
 }

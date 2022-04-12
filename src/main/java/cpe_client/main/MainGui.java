@@ -18,7 +18,6 @@ public class MainGui extends Application {
     }
 
     public static void main(String[] args){
-        cpe_client.cpecrawler.test_data.getHistoryTestDate();
         launch();
     }
 }
