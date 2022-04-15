@@ -14,8 +14,13 @@ public class MainGui extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setTitle("Hello World!");
         stage.setScene(scene);
+<<<<<<< HEAD
         stage.show();iasdoiahdsuaois
     }//asdkjiaosdjioads
+=======
+        stage.show();
+    }//
+>>>>>>> 4a7aefaaf52e1127a541fd9c2a6498491bb3a245
 
     public static void main(String[] args) {
         launch();
