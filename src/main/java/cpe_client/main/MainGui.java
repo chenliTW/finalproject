@@ -15,7 +15,7 @@ public class MainGui extends Application {
         stage.setTitle("Hello World!");
         stage.setScene(scene);
         stage.show();
-    }
+    }//
 
     public static void main(String[] args) {
         launch();
