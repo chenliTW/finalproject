@@ -10,6 +10,7 @@ import java.security.SecureRandom;
 import java.util.*;
 
 public class test_data {
+
     private static TrustManager[] trustAllCerts = new TrustManager[]{
             new X509TrustManager() {
                 public java.security.cert.X509Certificate[] getAcceptedIssuers() {

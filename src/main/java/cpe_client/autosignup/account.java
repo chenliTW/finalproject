@@ -5,6 +5,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class account {
 
+    public static String cookie="";
+
     public static String popLoginPageandGetCookie(){
         if(System.getProperty("os.name").equals("Mac OS X")){//better than Windows
             System.setProperty("webdriver.chrome.driver","./webdriver/chromedriver");
@@ -29,6 +31,8 @@ public class account {
         String ret=driver.manage().getCookies().toString();
 
         driver.close();
+
+        account.cookie=ret;
 
         return ret;
 
