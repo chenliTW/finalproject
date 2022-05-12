@@ -3,7 +3,7 @@ package cpe_client.main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class MainController {
+public class Mock_TestController {
     @FXML
     private Label welcomeText;
 
