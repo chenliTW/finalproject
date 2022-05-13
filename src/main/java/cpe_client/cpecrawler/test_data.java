@@ -8,6 +8,7 @@ import java.net.URI;
 import java.net.http.*;
 import java.security.SecureRandom;
 import java.util.*;
+import org.apache.commons.text.StringEscapeUtils;
 
 public class test_data {
 
@@ -75,6 +76,29 @@ public class test_data {
             res=res.replaceAll("[\\s]*([0-9]*?\\:[[a-z][A-Z]]*)[\\s]*","$1\n");
             String[] ret=res.split("\n");
             return ret;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    public static String getAcceptCode(String problemId){
+        /*
+            回傳 AC code
+            args:
+                (String) problemId-> 題號 ex "12908"
+            return value:
+                (string) -> AC code in c++ ex. "//uva12908\n#include <algorithm>\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    int input = 0;\n    vector<int> table;\n\n    for (int i = 0; i <= 20000; i++) {\n        table.push_back((i * (i + 1)) / 2);\n    }\n\n    while (cin >> input && input) {\n        vector<int>::iterator itTable = upper_bound(table.begin(), table.end(), input);\n        cout << *itTable - input << " " << itTable - table.begin() << endl;\n    }\n\n    return 0;\n}"
+         */
+        try {
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustAllCerts, new SecureRandom());
+            HttpClient httpClient=HttpClient.newBuilder().sslContext(sslContext).build();
+            HttpRequest request= HttpRequest.newBuilder().uri(URI.create("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problemId+".php")).GET().build();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            String res=response.body().toString().split("<pre class=\"prettyprint\">")[1].split("</pre>")[0];
+            res=StringEscapeUtils.unescapeHtml4(res);
+            return res;
         }catch (Exception e){
             System.out.println(e);
             return null;
