@@ -11,5 +11,6 @@ public class Main_MenuController {
     @FXML
     protected void onMockTestButtonClick() {
         MainGui.currentStage.setScene(MainGui.mockTestScene);
+        MainGui.currentStage.setMaximized(true);
     }
 }
