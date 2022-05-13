@@ -93,7 +93,7 @@
     </MenuBar>
     <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
-        <AnchorPane>
+        <AnchorPane fx:id="masterPane">
           <children>
             <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Master" textAlignment="CENTER" wrapText="false">
               <font>
@@ -134,7 +134,7 @@
                               <Font size="23.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="troblemSelector" layoutX="1.0" layoutY="79.0" prefHeight="25.0" prefWidth="187.0" promptText="選擇題目" />
+                        <ComboBox fx:id="problemSelector" layoutX="1.0" layoutY="79.0" prefHeight="25.0" prefWidth="187.0" promptText="選擇題目" />
                         <ComboBox fx:id="languageSelector" layoutX="1.0" layoutY="408.0" prefHeight="23.0" prefWidth="152.0" promptText="選擇語言" />
                         <Button fx:id="submmitButton" layoutX="156.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#onSubmitButtonClick" text="送出" />
                         <TextField fx:id="inputBox" layoutY="146.0" prefHeight="115.0" prefWidth="208.0" promptText="輸入" />

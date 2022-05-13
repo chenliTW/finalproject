@@ -7,6 +7,8 @@ module cpe_client {
     requires org.seleniumhq.selenium.api;
     requires org.seleniumhq.selenium.chrome_driver;
     requires org.apache.commons.text;
+    requires PDFViewerFX;
+    requires javafx.web;
 
     opens cpe_client.main to javafx.fxml;
     exports cpe_client.main;

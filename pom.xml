@@ -13,11 +13,21 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.8.1</junit.version>
     </properties>
-
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
+            <version>18-ea+4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
             <version>18-ea+4</version>
         </dependency>
         <dependency>
@@ -57,7 +67,11 @@
             <artifactId>commons-text</artifactId>
             <version>1.9</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.Dansoftowner</groupId>
+            <artifactId>PDFViewerFX</artifactId>
+            <version>0.8</version>
+        </dependency>
 
     </dependencies>
 
