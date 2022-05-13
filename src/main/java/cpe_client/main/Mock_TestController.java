@@ -67,16 +67,16 @@ public class Mock_TestController {
     public ComboBox problemSelector;
     public Button othersSwitch;
     public SplitPane splitPane;
-    public ScrollPane codingPane, othersPane;
-
+    public ScrollPane codingPane;
+    public VBox othersBox;
     @FXML
     public void initialize() throws IOException {
         // test
-        splitPane.getItems().removeAll(codingPane, othersPane);
+        splitPane.getItems().removeAll(codingPane, othersBox);
 
     /* PDF Section */
         PDFDisplayer displayer = new PDFDisplayer();
-        splitPane.getItems().addAll(displayer.toNode(), codingPane, othersPane);
+        splitPane.getItems().addAll(displayer.toNode(), codingPane, othersBox);
         problemSelector.getItems().addAll("Problem 1", "Problem 2", "Problem 3", "Problem 4", "Problem 5", "Problem 6", "Problem 7");
         Mock_TestController.execute();
         problemSelector.setOnAction((e) -> {
@@ -109,7 +109,7 @@ public class Mock_TestController {
             if (splitPane.getItems().size() == 3){
                 splitPane.getItems().remove(2);
             }else{
-                splitPane.getItems().add(othersPane);
+                splitPane.getItems().add(othersBox);
             }
         });
     }

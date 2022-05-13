@@ -42,7 +42,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -104,38 +104,29 @@
                   </Label>
                </content>
         </ScrollPane>
-            <ScrollPane fx:id="othersPane" prefHeight="200.0" prefWidth="200.0">
-               <content>
-                  <Pane prefHeight="565.0" prefWidth="208.0">
-                     <children>
-                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" wrapText="false">
-                           <font>
-                              <Font size="18.0" fx:id="x11" />
-                           </font>
-                           <textFill>
-                              <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
-                           </textFill>
-                        </Label>
-                        <Label fx:id="timer" alignment="CENTER" layoutX="87.0" layoutY="38.0" prefHeight="34.0" prefWidth="114.0" text="timer" textAlignment="CENTER">
-                           <font>
-                              <Font size="23.0" />
-                           </font>
-                        </Label>
-                        <ComboBox fx:id="problemSelector" layoutX="1.0" layoutY="79.0" prefHeight="25.0" prefWidth="187.0" promptText="選擇題目" />
-                        <ComboBox fx:id="languageSelector" layoutX="1.0" layoutY="408.0" prefHeight="23.0" prefWidth="152.0" promptText="選擇語言" />
-                        <Button fx:id="submmitButton" layoutX="156.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#onSubmitButtonClick" text="送出" />
-                        <TextField fx:id="inputBox" layoutY="146.0" prefHeight="115.0" prefWidth="208.0" promptText="輸入" />
-                        <TextField fx:id="outpuBox" alignment="TOP_LEFT" editable="false" layoutY="273.0" prefHeight="127.0" prefWidth="208.0" text="輸出" />
-                        <Label fx:id="judgeResult" layoutX="4.0" layoutY="448.0" prefHeight="74.0" prefWidth="165.0" text="judgeResult">
-                           <font>
-                              <Font size="28.0" />
-                           </font>
-                        </Label>
-                        <ComboBox fx:id="testCaseSelector" layoutX="1.0" layoutY="110.0" prefHeight="23.0" prefWidth="188.0" promptText="選擇測資" />
-                     </children>
-                  </Pane>
-               </content>
-            </ScrollPane>
+            <VBox fx:id="othersBox" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="456.0" prefWidth="208.0" spacing="5.0">
+               <children>
+                  <Label fx:id="timer" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="4.0" prefWidth="634.0" text="timer" textAlignment="CENTER">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="problemSelector" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="187.0" promptText="選擇題目" />
+                  <ComboBox fx:id="testCaseSelector" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="188.0" promptText="選擇測資" />
+                  <TextArea fx:id="inputBox" prefHeight="200.0" prefWidth="200.0" promptText="輸入" />
+                  <TextArea fx:id="outputBox" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="執行結果" />
+                  <ComboBox fx:id="languageSelector" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="152.0" promptText="選擇語言" />
+                  <Button fx:id="submmitButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#onSubmitButtonClick" text="送出" />
+                  <Label fx:id="judgeResult" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="74.0" prefWidth="165.0" text="judgeResult" textAlignment="CENTER">
+                     <font>
+                        <Font name="Consolas Bold" size="28.0" />
+                     </font>
+                  </Label>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
       </items>
     </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
