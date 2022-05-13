@@ -11,7 +11,16 @@ import java.net.http.HttpResponse;
 public class oj {
 
     public static String submitCodeAndReturnId(String code,String problemId,String language){
-
+        /*
+            !!!CALL 之前要先 CALL login!!!
+            傳code到oj
+            args:
+                (string)code->程式碼 ex. "a=input()\nprint(a)"
+                (string)problemId->題目Id ex. "12908"
+                (string)language->要judge的語言 ex. "c++"
+            return value:
+                (string) -> OJ Submit流水號(Id)
+         */
         String languageId="";
 
         if(language.equals("c++")){
@@ -58,6 +67,15 @@ public class oj {
     }
 
     public static String getResultById(String Id){
+        /*
+            !!!CALL 之前要先 CALL login!!!
+            拿judge結果
+            args:
+                (string)Id -> OJ Submit流水號(Id)
+            return value:
+                (string) -> 結果 ex. "AC"/"queue"
+         */
+
         try {
             CookieHandler.setDefault(new CookieManager());
             HttpCookie sessionCookie = new HttpCookie("b985b4592acb7c5112cce9e4729765d0", account.cookie);

@@ -27,7 +27,9 @@ public class signup {
     };
 
     public static void signup() {
-
+        /*
+            自動用引導使用者登入後拿到的cookie報名cpe (目前只有 東華大學 資工 報名 東華大學場)
+         */
         try {
             CookieHandler.setDefault(new CookieManager());
 

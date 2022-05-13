@@ -12,6 +12,10 @@ import java.util.*;
 public class test_data {
 
     private static TrustManager[] trustAllCerts = new TrustManager[]{
+            /*
+            相信一切的trust
+            mannager,當Httpclient用它,Httpclient就不會噴不信任cert的error
+             */
             new X509TrustManager() {
                 public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                     return null;
@@ -26,7 +30,13 @@ public class test_data {
     };
 
     public static String[] getHistoryTestDates(){
+        /*
+            回傳歷史場次的日期
+            args:
 
+            return value:
+                (string[]) -> 歷屆考試時間 ex. {"2020-10-20","2021-12-21"}
+         */
         try {
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, trustAllCerts, new SecureRandom());
@@ -45,6 +55,13 @@ public class test_data {
     }
 
     public static String[] getTestProblems(String testDate){
+        /*
+        回傳歷史場次的日期
+            args:
+                (String) testDate-> ex "2021-12-21"
+            return value:
+                (string[]) -> 那次考試的題目 ex. {"12911: Subset sum","11792: Krochanska is Here!"}
+         */
         try {
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, trustAllCerts, new SecureRandom());

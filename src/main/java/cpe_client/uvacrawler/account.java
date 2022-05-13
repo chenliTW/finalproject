@@ -22,6 +22,7 @@ public class account {
     public static String cookie="";//b985b4592acb7c5112cce9e4729765d0=cookie
 
     public static HttpRequest.BodyPublisher ofFormData(Map<Object, Object> data) {
+        // HTTP post form data 生成器
         var builder = new StringBuilder();
         for (Map.Entry<Object, Object> entry : data.entrySet()) {
             if (builder.length() > 0) {
@@ -36,6 +37,7 @@ public class account {
 
 
     private static HashMap<String, String> getLoginFormData() throws IOException, InterruptedException {
+        // 拿csrf token並生成表單
         //oh no , online judge has csrf protection or not(? it csrf token expire base on time but not request(?
         HttpClient httpClient=HttpClient.newHttpClient();
         HttpRequest request= HttpRequest.newBuilder().uri(URI.create("https://onlinejudge.org/")).GET().build();
@@ -63,6 +65,14 @@ public class account {
     }
 
     public static String loginAndGetCookie(){
+        /*
+             登入
+
+            args:
+
+            return value:
+                (string) -> Cookie
+         */
         try {
             CookieHandler.setDefault(new CookieManager());
 
