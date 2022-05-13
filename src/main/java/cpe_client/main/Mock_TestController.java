@@ -1,40 +1,61 @@
 package cpe_client.main;
-
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import com.dansoftware.pdfdisplayer.PDFDisplayer;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.*;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.http.HttpClient;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.cert.*;
 import java.util.ResourceBundle;
 
 public class Mock_TestController {
-    private static TrustManager[] trustAllCerts = new TrustManager[]{
-            /*
-            相信一切的trust
-            mannager,當Httpclient用它,Httpclient就不會噴不信任cert的error
-             */
-            new X509TrustManager() {
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                    return null;
+    public static void execute(){
+        TrustManager[] trustAllCerts = new TrustManager[] {
+                new X509TrustManager() {
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+                    @Override
+                    public void checkClientTrusted(X509Certificate[] arg0, String arg1)
+                            throws CertificateException {}
+
+                    @Override
+                    public void checkServerTrusted(X509Certificate[] arg0, String arg1)
+                            throws CertificateException {}
+
                 }
-                public void checkClientTrusted(
-                        java.security.cert.X509Certificate[] certs, String authType) {
-                }
-                public void checkServerTrusted(
-                        java.security.cert.X509Certificate[] certs, String authType) {
-                }
+        };
+
+        SSLContext sc=null;
+        try {
+            sc = SSLContext.getInstance("SSL");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        try {
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+        // Create all-trusting host name verifier
+        HostnameVerifier validHosts = new HostnameVerifier() {
+            @Override
+            public boolean verify(String arg0, SSLSession arg1) {
+                return true;
             }
-    };
+        };
+        // All hosts will be valid
+        HttpsURLConnection.setDefaultHostnameVerifier(validHosts);
+    }
 
     @FXML
     private Label welcomeText;
@@ -49,42 +70,48 @@ public class Mock_TestController {
     @FXML
     public AnchorPane masterPane;
     public ComboBox problemSelector;
-
+    public Button othersSwitch;
+    public SplitPane splitPane;
+    public ScrollPane codingPane, othersPane;
     @FXML
     public void initialize() throws IOException {
-       // try {
-         //   SSLContext sslContext = SSLContext.getInstance("TLS");
-         //   sslContext.init(null, trustAllCerts, new SecureRandom());
-         //   HttpClient httpClient = HttpClient.newBuilder().sslContext(sslContext).build();
-            PDFDisplayer displayer = new PDFDisplayer();
-            masterPane.getChildren().add(displayer.toNode());
-            problemSelector.getItems().addAll("Problem 1", "Problem 2", "Problem 3", "Problem 4", "Problem 5", "Problem 6", "Problem 7");
-            problemSelector.setOnAction((e) -> {
-                //System.out.println(problemSelector.getSelectionModel().getSelectedItem());
-                String selected = problemSelector.getSelectionModel().getSelectedItem().toString();
-                try {
-                    if (selected == "Problem 1") {
-                        displayer.loadPDF(new URL("https://onlinejudge.org/external/129/12908.pdf"));
-                    } else if (selected == "Problem 2") {
-                        displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/10642.pdf"));
-                    } else if (selected == "Problem 3") {
-                        displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/13171.pdf"));
-                    } else if (selected == "Problem 4") {
-                       // displayer.loadPDF(new URL(""));
-                    } else if (selected == "Problem 5") {
+    /* PDF Section */
+        PDFDisplayer displayer = new PDFDisplayer();
+        masterPane.getChildren().add(displayer.toNode());
+        problemSelector.getItems().addAll("Problem 1", "Problem 2", "Problem 3", "Problem 4", "Problem 5", "Problem 6", "Problem 7");
+        Mock_TestController.execute();
+        problemSelector.setOnAction((e) -> {
+            //System.out.println(problemSelector.getSelectionModel().getSelectedItem());
+            String selected = problemSelector.getSelectionModel().getSelectedItem().toString();
+            try {
 
-                    } else if (selected == "Problem 6") {
+                if (selected == "Problem 1") {
+                    displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/12908.pdf"));
+                } else if (selected == "Problem 2") {
+                    displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/10642.pdf"));
+                } else if (selected == "Problem 3") {
+                    displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/13171.pdf"));
+                } else if (selected == "Problem 4") {
+                   // displayer.loadPDF(new URL(""));
+                } else if (selected == "Problem 5") {
 
-                    } else if (selected == "Problem 7") {
+                } else if (selected == "Problem 6") {
 
-                    }
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                } else if (selected == "Problem 7") {
+
                 }
-            });
-            //cpe_client.cpecrawler.test_data.getHistoryTestDates();
-       // } catch(Exception e){
-       //     System.out.println(e);
-       // }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+    /* othersButton */
+        othersSwitch.setOnAction((e) -> {
+            if (splitPane.getItems().size() == 3){
+                splitPane.getItems().remove(2);
+            }else{
+                splitPane.getItems().add(othersPane);
+            }
+        });
     }
 }

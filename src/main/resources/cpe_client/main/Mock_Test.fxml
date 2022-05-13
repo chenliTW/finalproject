@@ -52,7 +52,7 @@
 
 <VBox prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cpe_client.main.Mock_TestController">
   <children>
-    <MenuBar prefWidth="903.0" VBox.vgrow="NEVER">
+    <MenuBar prefWidth="835.0" VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -91,7 +91,7 @@
         </Menu>
       </menus>
     </MenuBar>
-    <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <SplitPane fx:id="splitPane" dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
         <AnchorPane fx:id="masterPane">
           <children>
@@ -105,7 +105,7 @@
             </Label>
           </children>
         </AnchorPane>
-        <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+        <ScrollPane fx:id="codingPane" prefHeight="-1.0" prefWidth="-1.0">
                <content>
                   <Label alignment="CENTER" minWidth="45.0" prefHeight="45.0" prefWidth="92.0" style="&#10;" text="View" textAlignment="CENTER" wrapText="false">
                      <font>
@@ -117,7 +117,7 @@
                   </Label>
                </content>
         </ScrollPane>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0">
+            <ScrollPane fx:id="othersPane" prefHeight="200.0" prefWidth="200.0">
                <content>
                   <Pane prefHeight="565.0" prefWidth="208.0">
                      <children>
@@ -162,7 +162,7 @@
           </textFill>
         </Label>
         <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-        <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
+            <Button fx:id="othersSwitch" mnemonicParsing="false" text="操作區開關" />
       </children>
       <padding>
         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
