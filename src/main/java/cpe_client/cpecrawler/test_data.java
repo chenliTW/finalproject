@@ -105,4 +105,39 @@ public class test_data {
         }
     }
 
+    public static String[][] getProblemTestCases(String problemId){
+        /*
+            回傳 官方測資
+            args:
+                (String) problemId-> 題號 ex "12908"
+            return value:
+                (string)[2][2] -> 測資,二維2*2 string array ex. {{"{input(case a)}","{output(case a)}"},{"{input(case b)}","{output(case b)}"}}
+        */
+        try {
+            String[][] ret={{"{input(case a)}","{output(case a)}"},{"{input(case b)}","{output(case b)}"}};
+
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustAllCerts, new SecureRandom());
+            HttpClient httpClient=HttpClient.newBuilder().sslContext(sslContext).build();
+            HttpRequest request= HttpRequest.newBuilder().uri(URI.create("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/testData/uva"+problemId+"a.php")).GET().build();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            String[] res=response.body().toString().split("<pre>");
+
+            ret[0][0]=res[1].split("</pre>")[0];
+            ret[0][1]=res[2].split("</pre>")[0];
+
+            request= HttpRequest.newBuilder().uri(URI.create("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/testData/uva"+problemId+"b.php")).GET().build();
+            response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            res=response.body().toString().split("<pre>");
+
+            ret[1][0]=res[1].split("</pre>")[0];
+            ret[1][1]=res[2].split("</pre>")[0];
+
+            return ret;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+
 }
