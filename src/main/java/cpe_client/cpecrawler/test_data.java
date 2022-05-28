@@ -61,7 +61,7 @@ public class test_data {
             args:
                 (String) testDate-> ex "2021-12-21"
             return value:
-                (string[]) -> 那次考試的題目 ex. {"12911: Subset sum","11792: Krochanska is Here!"}
+                (string[]) -> 那次考試的題目 ex. {"12911","11792"}
          */
         try {
             SSLContext sslContext = SSLContext.getInstance("TLS");
@@ -73,7 +73,7 @@ public class test_data {
             res=res.replaceAll("<tr>[\\s\\S]*?pdf\">([\\s\\S]*?)<\\/a>[\\s\\S]*?<\\/tr>","$1");
             res=res.replaceAll(" ","");
             res=res.replaceAll("\t","");
-            res=res.replaceAll("[\\s]*([0-9]*?\\:[[a-z][A-Z]]*)[\\s]*","$1\n");
+            res=res.replaceAll("[\\s]*([0-9]*?)\\:[[a-z][A-Z]['!?()]]*[\\s]*","$1\n");
             String[] ret=res.split("\n");
             return ret;
         }catch (Exception e){
