@@ -4,6 +4,7 @@ import javafx.scene.control.*;
 import com.dansoftware.pdfdisplayer.PDFDisplayer;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javax.net.ssl.*;
 import javax.swing.*;
@@ -13,11 +14,16 @@ import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.*;
+
+import org.asynchttpclient.HttpResponseStatus;
 import org.fife.ui.rsyntaxtextarea.*;
 import javafx.embed.swing.SwingNode;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 public class Mock_TestController {
+    String nowProblem;
+    String[] problems;
+    String[][] testcases;
     public static void execute(){
         TrustManager[] trustAllCerts = new TrustManager[] {
                 new X509TrustManager() {
@@ -70,35 +76,38 @@ public class Mock_TestController {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
     @FXML
-    public ComboBox problemSelector, examdateSelector;
+    public ComboBox problemSelector, examdateSelector, testCaseSelector;
     public Button othersSwitch;
     public SplitPane splitPane;
     public VBox othersBox, codingPane;
     public SwingNode codingPaneSwingNode;
+    public TextArea inputBox, outputBox;
     @FXML
     public void initialize() throws IOException {
-        // test
+    /* Init */
         splitPane.getItems().removeAll(codingPane, othersBox);
-
+        problemSelector.setDisable(true);
+        testCaseSelector.setDisable(true);
     /* PDF Section */
         PDFDisplayer displayer = new PDFDisplayer();
         splitPane.getItems().addAll(displayer.toNode(), codingPane, othersBox);
         String[] examdates = cpe_client.cpecrawler.test_data.getHistoryTestDates();
-        String[] problems = new String[7];
+
         for (int i = examdates.length-2; i >= examdates.length-16; i--){
             examdateSelector.getItems().add(examdates[i].substring(0,examdates[i].length()-1));
         }
 
         problemSelector.getItems().addAll("Problem 1", "Problem 2", "Problem 3", "Problem 4", "Problem 5", "Problem 6", "Problem 7");
         Mock_TestController.execute();
+
+    /* 選擇場次 */
         examdateSelector.setOnAction((e) -> {
-            String[] tmp = cpe_client.cpecrawler.test_data.getTestProblems((String) examdateSelector.getValue());
-            for (int i = 0; i < 7; i++){
-                problems[i] = tmp[i];
-                //System.out.println(problems[i]);
-            }
+            problems = cpe_client.cpecrawler.test_data.getTestProblems((String) examdateSelector.getValue());
             examdateSelector.setDisable(true);
+            problemSelector.setDisable(false);
         });
+
+    /* 選擇題目*/
 
         problemSelector.setOnAction((e) -> {
             //System.out.println(problemSelector.getSelectionModel().getSelectedItem());
@@ -106,24 +115,50 @@ public class Mock_TestController {
             try {
                 if (selected == "Problem 1") {
                     displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problems[0]+".pdf"));
+                    nowProblem = problems[0];
                 } else if (selected == "Problem 2") {
                     displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problems[1]+".pdf"));
+                    nowProblem = problems[1];
                 } else if (selected == "Problem 3") {
                     displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problems[2]+".pdf"));
+                    nowProblem = problems[2];
                 } else if (selected == "Problem 4") {
                     displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problems[3]+".pdf"));
+                    nowProblem = problems[3];
                 } else if (selected == "Problem 5") {
                     displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problems[4]+".pdf"));
+                    nowProblem = problems[4];
                 } else if (selected == "Problem 6") {
                     displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problems[5]+".pdf"));
+                    nowProblem = problems[5];
                 } else if (selected == "Problem 7") {
                     displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problems[6]+".pdf"));
+                    nowProblem = problems[6];
                 }
+                testCaseSelector.setDisable(false);
+                testCaseSelector.setValue(null);
+                inputBox.setText("");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         });
+    /* 選擇測資 */
 
+
+        testCaseSelector.getItems().addAll("自訂測資", "官方測資 A", "官方測資 B");
+        testCaseSelector.setOnAction((e) -> {
+            testcases = cpe_client.cpecrawler.test_data.getProblemTestCases(nowProblem);
+            if (testCaseSelector.getValue() == "自訂測資"){
+                inputBox.setEditable(true);
+                inputBox.setText("");
+            } else if (testCaseSelector.getValue() == "官方測資 A"){
+                inputBox.setEditable(false);
+                inputBox.setText(testcases[0][0]);
+            } else if (testCaseSelector.getValue() == "官方測資 B"){
+                inputBox.setEditable(false);
+                inputBox.setText(testcases[1][0]);
+            }
+        });
     /* othersButton */
         othersSwitch.setOnAction((e) -> {
             if (splitPane.getItems().size() == 3){
