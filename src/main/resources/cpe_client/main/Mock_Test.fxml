@@ -32,6 +32,7 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.embed.swing.SwingNode?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -39,7 +40,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
@@ -48,7 +48,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
-<?import javafx.embed.swing.SwingNode?>
 
 <VBox prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cpe_client.main.Mock_TestController">
   <children>
@@ -91,21 +90,13 @@
         </Menu>
       </menus>
     </MenuBar>
-    <SplitPane fx:id="splitPane" dividerPositions="0.2505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <SplitPane fx:id="splitPane" dividerPositions="0.5" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
-        <ScrollPane fx:id="codingPane" prefHeight="-1.0" prefWidth="-1.0">
-               <content>
-                  <Label alignment="CENTER" minWidth="45.0" prefHeight="45.0" prefWidth="92.0" style="&#10;" text="View" textAlignment="CENTER" wrapText="false">
-                     <font>
-                        <Font size="18.0" fx:id="x12" />
-                     </font>
-                     <textFill>
-                        <Color red="0.624" green="0.624" blue="0.624" fx:id="x22" />
-                     </textFill>
-                  </Label>
-                   <SwingNode fx:id="codingPaneSwingNode" />
-               </content>
-        </ScrollPane>
+            <VBox fx:id="codingPane" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <SwingNode fx:id="codingPaneSwingNode" />
+               </children>
+            </VBox>
             <VBox fx:id="othersBox" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="456.0" prefWidth="208.0" spacing="5.0">
                <children>
                   <Label fx:id="timer" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="4.0" prefWidth="634.0" text="timer" textAlignment="CENTER">

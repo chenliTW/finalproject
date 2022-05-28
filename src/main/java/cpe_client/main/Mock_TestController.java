@@ -2,8 +2,12 @@ package cpe_client.main;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import com.dansoftware.pdfdisplayer.PDFDisplayer;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javax.net.ssl.*;
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.security.KeyManagementException;
@@ -11,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.*;
 import org.fife.ui.rsyntaxtextarea.*;
 import javafx.embed.swing.SwingNode;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
 public class Mock_TestController {
     public static void execute(){
@@ -68,8 +73,7 @@ public class Mock_TestController {
     public ComboBox problemSelector;
     public Button othersSwitch;
     public SplitPane splitPane;
-    public ScrollPane codingPane;
-    public VBox othersBox;
+    public VBox othersBox, codingPane;
     public SwingNode codingPaneSwingNode;
     @FXML
     public void initialize() throws IOException {
@@ -114,9 +118,16 @@ public class Mock_TestController {
                 splitPane.getItems().add(othersBox);
             }
         });
+
     /* coding area */
+        JPanel cp = new JPanel(new BorderLayout());
         RSyntaxTextArea textArea = new RSyntaxTextArea(20, 60);
+        RTextScrollPane sp = new RTextScrollPane(textArea);
+        //textArea.setCodeFoldingEnabled(true);
+        cp.add(sp);
+        codingPaneSwingNode.setContent(cp);
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CPLUSPLUS);
-        codingPaneSwingNode.setContent(textArea);
+
+
     }
 }
