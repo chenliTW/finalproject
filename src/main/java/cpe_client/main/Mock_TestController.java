@@ -70,7 +70,7 @@ public class Mock_TestController {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
     @FXML
-    public ComboBox problemSelector;
+    public ComboBox problemSelector, examdateSelector;
     public Button othersSwitch;
     public SplitPane splitPane;
     public VBox othersBox, codingPane;
@@ -83,27 +83,41 @@ public class Mock_TestController {
     /* PDF Section */
         PDFDisplayer displayer = new PDFDisplayer();
         splitPane.getItems().addAll(displayer.toNode(), codingPane, othersBox);
+        String[] examdates = cpe_client.cpecrawler.test_data.getHistoryTestDates();
+        String[] problems = new String[7];
+        for (int i = examdates.length-2; i >= examdates.length-16; i--){
+            examdateSelector.getItems().add(examdates[i].substring(0,examdates[i].length()-1));
+        }
+
         problemSelector.getItems().addAll("Problem 1", "Problem 2", "Problem 3", "Problem 4", "Problem 5", "Problem 6", "Problem 7");
         Mock_TestController.execute();
+        examdateSelector.setOnAction((e) -> {
+            String[] tmp = cpe_client.cpecrawler.test_data.getTestProblems((String) examdateSelector.getValue());
+            for (int i = 0; i < 7; i++){
+                problems[i] = tmp[i];
+                //System.out.println(problems[i]);
+            }
+            examdateSelector.setDisable(true);
+        });
+
         problemSelector.setOnAction((e) -> {
             //System.out.println(problemSelector.getSelectionModel().getSelectedItem());
             String selected = problemSelector.getSelectionModel().getSelectedItem().toString();
             try {
-
                 if (selected == "Problem 1") {
-                    displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/12908.pdf"));
+                    displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problems[0]+".pdf"));
                 } else if (selected == "Problem 2") {
-                    displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/10642.pdf"));
+                    displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problems[1]+".pdf"));
                 } else if (selected == "Problem 3") {
-                    displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/13171.pdf"));
+                    displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problems[2]+".pdf"));
                 } else if (selected == "Problem 4") {
-                   // displayer.loadPDF(new URL(""));
+                    displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problems[3]+".pdf"));
                 } else if (selected == "Problem 5") {
-
+                    displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problems[4]+".pdf"));
                 } else if (selected == "Problem 6") {
-
+                    displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problems[5]+".pdf"));
                 } else if (selected == "Problem 7") {
-
+                    displayer.loadPDF(new URL("https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/"+problems[6]+".pdf"));
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -127,7 +141,6 @@ public class Mock_TestController {
         cp.add(sp);
         codingPaneSwingNode.setContent(cp);
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CPLUSPLUS);
-
 
     }
 }
