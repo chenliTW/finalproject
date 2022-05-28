@@ -48,6 +48,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
+<?import javafx.embed.swing.SwingNode?>
 
 <VBox prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cpe_client.main.Mock_TestController">
   <children>
@@ -102,6 +103,7 @@
                         <Color red="0.624" green="0.624" blue="0.624" fx:id="x22" />
                      </textFill>
                   </Label>
+                   <SwingNode fx:id="codingPaneSwingNode" />
                </content>
         </ScrollPane>
             <VBox fx:id="othersBox" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="456.0" prefWidth="208.0" spacing="5.0">

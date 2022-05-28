@@ -9,7 +9,8 @@ import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.*;
-
+import org.fife.ui.rsyntaxtextarea.*;
+import javafx.embed.swing.SwingNode;
 
 public class Mock_TestController {
     public static void execute(){
@@ -69,6 +70,7 @@ public class Mock_TestController {
     public SplitPane splitPane;
     public ScrollPane codingPane;
     public VBox othersBox;
+    public SwingNode codingPaneSwingNode;
     @FXML
     public void initialize() throws IOException {
         // test
@@ -112,5 +114,9 @@ public class Mock_TestController {
                 splitPane.getItems().add(othersBox);
             }
         });
+    /* coding area */
+        RSyntaxTextArea textArea = new RSyntaxTextArea(20, 60);
+        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CPLUSPLUS);
+        codingPaneSwingNode.setContent(textArea);
     }
 }

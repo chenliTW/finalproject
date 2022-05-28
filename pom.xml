@@ -72,7 +72,16 @@
             <artifactId>PDFViewerFX</artifactId>
             <version>0.8</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.fifesoft</groupId>
+            <artifactId>rsyntaxtextarea</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>11-ea+24</version>
+        </dependency>
     </dependencies>
 
     <build>
