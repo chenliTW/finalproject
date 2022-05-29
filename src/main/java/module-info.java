@@ -11,6 +11,7 @@ module cpe_client {
     requires javafx.web;
     requires org.fife.RSyntaxTextArea;
     requires javafx.swing;
+    requires java.compiler;
 
     opens cpe_client.main to javafx.fxml;
     exports cpe_client.main;

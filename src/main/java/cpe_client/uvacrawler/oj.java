@@ -25,6 +25,10 @@ public class oj {
 
         if(language.equals("c++")){
             languageId="3";
+        }else if(language.equals("java")){
+            languageId="2";
+        }else if(language.equals("python")){
+            languageId="6";
         }
 
         try {
