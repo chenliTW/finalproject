@@ -16,6 +16,7 @@ public class executer {
                 (String) input-> 程式 stdin 輸入 ex "owo"
             return value:
                 (string) -> 程式 stdout 輸出 ex "hello owo"
+                            如果CE/RE則會回傳 "CE/RE\n"+error
         */
 
 
@@ -39,10 +40,32 @@ public class executer {
 
             Tool javac = ToolProvider.getSystemJavaCompiler();
 
-            javac.run(null, null, null, "./output/cpeclient.java");
+            Process p;
 
-            ProcessBuilder pb = new ProcessBuilder(new String[]{"java","-cp","./output","cpeclient"});
-            Process p = pb.start();
+            OutputStream err = new OutputStream() {
+                private StringBuilder string = new StringBuilder();
+
+                @Override
+                public void write(int b) throws IOException {
+                    this.string.append((char) b );
+                }
+
+                //Netbeans IDE automatically overrides this toString()
+                public String toString() {
+                    return this.string.toString();
+                }
+            };
+            javac.run(null, null, err, "./output/cpeclient.java");
+
+            if(err.toString().length()>0){
+                return "CE/RE\n"+err.toString();
+            }
+            try {
+                ProcessBuilder pb = new ProcessBuilder(new String[]{"java","-cp","./output","cpeclient"});
+                p = pb.start();
+            }catch (Exception e){
+                return "CE/RE";
+            }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
@@ -86,6 +109,7 @@ public class executer {
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
+            BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
             writer.write(input);
             writer.newLine();
@@ -95,6 +119,17 @@ public class executer {
 
             while ((line = reader.readLine()) != null) {
                 ret+=line;
+            }
+
+            boolean haserror=false;
+
+            while ((line = error.readLine()) != null) {
+                haserror=true;
+                ret+=line;
+            }
+
+            if(haserror){
+                return "CE/RE\n"+ret;
             }
 
             if(!p.waitFor(8, TimeUnit.SECONDS)) {
@@ -126,15 +161,23 @@ public class executer {
                 pb = new ProcessBuilder(new String[]{"./output/cpeclient"});
                 p = pb.start();
             }else{
-                pb = new ProcessBuilder(new String[]{".\\executils\\windows\\dm\\bin\\dmc.exe" ,"output\\cpeclient.cpp", "-I.\\executils\\windows\\dm\\stlport\\stlport\\"});
-                p = pb.start();
-                p.waitFor();
+
                 try {
-                    pb = new ProcessBuilder(new String[]{"cmd.exe","/c","del", "./output/cpeclient.exe"});
+                    pb = new ProcessBuilder(new String[]{"cmd.exe","/c","del", ".\\output\\cpeclient.exe"});
                     p = pb.start();
                     p.waitFor();
                 }catch(Exception e){
 
+                }
+
+                pb = new ProcessBuilder(new String[]{".\\executils\\windows\\dm\\bin\\dmc.exe" ,"output\\cpeclient.cpp", "-I.\\executils\\windows\\dm\\stlport\\stlport\\"});
+                p = pb.start();
+                p.waitFor();
+
+                BufferedReader compilereader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                String line,compileMsg = "";
+                while ((line = compilereader.readLine()) != null) {
+                    compileMsg+=line;
                 }
 
                 pb = new ProcessBuilder(new String[]{"cmd.exe","/c","del", "cpeclient.obj","cpeclient.map"});
@@ -145,9 +188,12 @@ public class executer {
                 p = pb.start();
                 p.waitFor();
 
-                pb = new ProcessBuilder(new String[]{"./output/cpeclient.exe"});
-                p = pb.start();
-
+                try {
+                    pb = new ProcessBuilder(new String[]{"./output/cpeclient.exe"});
+                    p = pb.start();
+                }catch (Exception e){
+                    return "CE/RE\n"+compileMsg;
+                }
             }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -156,9 +202,7 @@ public class executer {
             writer.write(input);
             writer.newLine();
             writer.close();
-
             String line;
-
             while ((line = reader.readLine()) != null) {
                 ret+=line;
             }
