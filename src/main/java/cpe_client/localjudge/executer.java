@@ -169,8 +169,7 @@ public class executer {
                 }catch(Exception e){
 
                 }
-
-                pb = new ProcessBuilder(new String[]{".\\executils\\windows\\dm\\bin\\dmc.exe" ,"output\\cpeclient.cpp", "-I.\\executils\\windows\\dm\\stlport\\stlport\\"});
+                pb = new ProcessBuilder(new String[]{".\\executils\\windows\\MinGW64\\bin\\g++.exe","-std=c++14" ,"output\\cpeclient.cpp","-o","output\\cpeclient.exe"});
                 p = pb.start();
                 p.waitFor();
 
@@ -179,14 +178,6 @@ public class executer {
                 while ((line = compilereader.readLine()) != null) {
                     compileMsg+=line;
                 }
-
-                pb = new ProcessBuilder(new String[]{"cmd.exe","/c","del", "cpeclient.obj","cpeclient.map"});
-                p = pb.start();
-                p.waitFor();
-
-                pb = new ProcessBuilder(new String[]{"cmd.exe","/c","move","./cpeclient.exe","./output/"});
-                p = pb.start();
-                p.waitFor();
 
                 try {
                     pb = new ProcessBuilder(new String[]{"./output/cpeclient.exe"});
