@@ -20,11 +20,11 @@ public class executer {
         */
 
 
-        if(language.equals("java")) {
+        if(language.equals("Java")) {
             return executeJava(code,input);
-        }else if(language.equals("python")){
+        }else if(language.equals("Python")){
             return executePython(code,input);
-        }else if(language.equals("c++")){
+        }else if(language.equals("C++")){
             return executeCpp(code,input);
         }
         return "bad language";

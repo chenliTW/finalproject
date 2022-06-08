@@ -5,6 +5,7 @@ import com.dansoftware.pdfdisplayer.PDFDisplayer;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javax.net.ssl.*;
 import javax.swing.*;
@@ -14,6 +15,7 @@ import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.*;
+import java.util.Scanner;
 
 import org.asynchttpclient.HttpResponseStatus;
 import org.fife.ui.rsyntaxtextarea.*;
@@ -76,18 +78,21 @@ public class Mock_TestController {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
     @FXML
-    public ComboBox problemSelector, examdateSelector, testCaseSelector;
-    public Button othersSwitch;
+    public ComboBox problemSelector, examdateSelector, testCaseSelector, languageSelector;
+    public Button othersSwitch, submmitButton;
     public SplitPane splitPane;
     public VBox othersBox, codingPane;
     public SwingNode codingPaneSwingNode;
     public TextArea inputBox, outputBox;
+    public Label judgeResult;
+
     @FXML
     public void initialize() throws IOException {
     /* Init */
         splitPane.getItems().removeAll(codingPane, othersBox);
         problemSelector.setDisable(true);
         testCaseSelector.setDisable(true);
+        inputBox.setDisable(true);
     /* PDF Section */
         PDFDisplayer displayer = new PDFDisplayer();
         splitPane.getItems().addAll(displayer.toNode(), codingPane, othersBox);
@@ -110,6 +115,7 @@ public class Mock_TestController {
     /* 選擇題目*/
 
         problemSelector.setOnAction((e) -> {
+            inputBox.setDisable(false);
             //System.out.println(problemSelector.getSelectionModel().getSelectedItem());
             String selected = problemSelector.getSelectionModel().getSelectedItem().toString();
             try {
@@ -148,13 +154,13 @@ public class Mock_TestController {
         testCaseSelector.getItems().addAll("自訂測資", "官方測資 A", "官方測資 B");
         testCaseSelector.setOnAction((e) -> {
             testcases = cpe_client.cpecrawler.test_data.getProblemTestCases(nowProblem);
-            if (testCaseSelector.getValue() == "自訂測資"){
+            if (testCaseSelector.getValue().equals("自訂測資")){
                 inputBox.setEditable(true);
                 inputBox.setText("");
-            } else if (testCaseSelector.getValue() == "官方測資 A"){
+            } else if (testCaseSelector.getValue().equals("官方測資 A")){
                 inputBox.setEditable(false);
                 inputBox.setText(testcases[0][0]);
-            } else if (testCaseSelector.getValue() == "官方測資 B"){
+            } else if (testCaseSelector.getValue().equals("官方測資 B")){
                 inputBox.setEditable(false);
                 inputBox.setText(testcases[1][0]);
             }
@@ -176,6 +182,50 @@ public class Mock_TestController {
         cp.add(sp);
         codingPaneSwingNode.setContent(cp);
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CPLUSPLUS);
+        /* Submmit Code and Compile */
+        languageSelector.getItems().addAll("C++", "Java", "Python");
 
+        submmitButton.setOnAction((e) -> {
+            String correctOutput, myOutput;
+
+            if (testCaseSelector.getValue().equals("官方測資 A")){
+                correctOutput = testcases[0][1];
+            }else if (testCaseSelector.getValue().equals("官方測資 B")){
+                correctOutput = testcases[1][1];
+            }else{
+                correctOutput = cpe_client.localjudge.executer.execute(cpe_client.cpecrawler.test_data.
+                        getAcceptCode(nowProblem), "C++", inputBox.getText());
+            }
+            myOutput = cpe_client.localjudge.executer.execute(textArea.getText(), languageSelector.getValue().toString(), inputBox.getText());
+            outputBox.setText("Your Output:\n\n" + myOutput + "\n\nCorrectOutput:\n" + correctOutput);
+            // Compare
+            Scanner correctScanner, myScanner;
+            correctScanner = new Scanner(correctOutput);
+            myScanner = new Scanner(myOutput);
+            boolean isAC=true;
+            if (myOutput.indexOf("CE/RE")==-1) {
+                while (correctScanner.hasNextLine() || myScanner.hasNextLine()) {
+                    if (!correctScanner.hasNextLine() || !myScanner.hasNextLine() ||
+                    !correctScanner.nextLine().equals(myScanner.nextLine())) {
+                       // System.out.println("Your Output:\n" + myOutput + "\n\nCorrectOutput:\n" + correctOutput);
+                        isAC = false;
+                        break;
+                    }
+                }
+                if (isAC) {
+                    judgeResult.setText("AC");
+                } else {
+                    if (myOutput.indexOf("TLE") == 0) {
+                        judgeResult.setText("TLE");
+                    }else{
+                        judgeResult.setText("WA");
+                    }
+                }
+            }else{
+                judgeResult.setText("CE/RE");
+            }
+
+            JOptionPane.showMessageDialog(null, "送出完成");
+        });
     }
 }
