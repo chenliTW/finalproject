@@ -76,14 +76,22 @@ public class executer {
 
             String line;
 
-            while ((line = reader.readLine()) != null) {
-                ret+=line;
+            long now = System.currentTimeMillis();
+            long timeoutInMillis = 1000L * 10;
+            long finish = now + timeoutInMillis;
+
+            while(true) {
+                if ((line = reader.readLine()) != null) {
+                    ret += line+"\n";
+                }else{
+                    break;
+                }
+                if(System.currentTimeMillis() > finish){
+                    p.destroy();
+                    return "TLE\n";
+                }
             }
 
-            if(!p.waitFor(8, TimeUnit.SECONDS)) {
-                p.destroy();
-                ret="TLE";
-            }
 
         }catch (Exception e){
             e.printStackTrace();
@@ -117,8 +125,20 @@ public class executer {
 
             String line;
 
-            while ((line = reader.readLine()) != null) {
-                ret+=line;
+            long now = System.currentTimeMillis();
+            long timeoutInMillis = 1000L * 10;
+            long finish = now + timeoutInMillis;
+
+            while(true) {
+                if ((line = reader.readLine()) != null) {
+                    ret += line+"\n";
+                }else{
+                    break;
+                }
+                if(System.currentTimeMillis() > finish){
+                    p.destroy();
+                    return "TLE\n";
+                }
             }
 
             boolean haserror=false;
@@ -130,11 +150,6 @@ public class executer {
 
             if(haserror){
                 return "CE/RE\n"+ret;
-            }
-
-            if(!p.waitFor(8, TimeUnit.SECONDS)) {
-                p.destroy();
-                ret="TLE";
             }
 
         }catch (Exception e){
@@ -194,15 +209,24 @@ public class executer {
             writer.newLine();
             writer.close();
             String line;
-            while ((line = reader.readLine()) != null) {
-                ret+=line;
+
+            long now = System.currentTimeMillis();
+            long timeoutInMillis = 1000L * 10;
+            long finish = now + timeoutInMillis;
+
+            while(true) {
+                if ((line = reader.readLine()) != null) {
+                    ret += line+"\n";
+                }else{
+                    break;
+                }
+                if(System.currentTimeMillis() > finish){
+                    p.destroy();
+                    return "TLE\n";
+                }
             }
 
-            if(!p.waitFor(8, TimeUnit.SECONDS)) {
-                p.destroy();
-                ret="TLE";
-            }
-
+            p.waitFor();
         }catch (Exception e){
             e.printStackTrace();
         }
