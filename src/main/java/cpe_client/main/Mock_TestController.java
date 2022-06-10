@@ -176,14 +176,14 @@ public class Mock_TestController {
 
     /* coding area */
         JPanel cp = new JPanel(new BorderLayout());
-        RSyntaxTextArea textArea = new RSyntaxTextArea(20, 60);
+        RSyntaxTextArea textArea = new RSyntaxTextArea(60, 60);
         RTextScrollPane sp = new RTextScrollPane(textArea);
         //textArea.setCodeFoldingEnabled(true);
         cp.add(sp);
         codingPaneSwingNode.setContent(cp);
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CPLUSPLUS);
         /* Submmit Code and Compile */
-        languageSelector.getItems().addAll("C++", "Java", "Python");
+        languageSelector.getItems().addAll("C++", "Java", "Python","Wenyan","JsFxxk");
 
         submmitButton.setOnAction((e) -> {
             String correctOutput, myOutput;
@@ -225,7 +225,7 @@ public class Mock_TestController {
                 judgeResult.setText("CE/RE");
             }
 
-            JOptionPane.showMessageDialog(null, "送出完成");
+            //JOptionPane.showMessageDialog(null, "送出完成");
         });
     }
 }
