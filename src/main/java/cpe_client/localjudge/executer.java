@@ -84,6 +84,7 @@ public class executer {
                 if ((line = reader.readLine()) != null) {
                     ret += line+"\n";
                 }else{
+                    ret=ret.trim()+"\n";
                     break;
                 }
                 if(System.currentTimeMillis() > finish){
@@ -133,6 +134,7 @@ public class executer {
                 if ((line = reader.readLine()) != null) {
                     ret += line+"\n";
                 }else{
+                    ret=ret.trim()+"\n";
                     break;
                 }
                 if(System.currentTimeMillis() > finish){
@@ -188,7 +190,7 @@ public class executer {
                 p = pb.start();
                 p.waitFor();
 
-                BufferedReader compilereader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                BufferedReader compilereader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
                 String line,compileMsg = "";
                 while ((line = compilereader.readLine()) != null) {
                     compileMsg+=line;
@@ -218,6 +220,7 @@ public class executer {
                 if ((line = reader.readLine()) != null) {
                     ret += line+"\n";
                 }else{
+                    ret=ret.trim()+"\n";
                     break;
                 }
                 if(System.currentTimeMillis() > finish){

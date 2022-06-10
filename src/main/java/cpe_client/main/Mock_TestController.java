@@ -200,7 +200,7 @@ public class Mock_TestController {
             outputBox.setText("Your Output:\n\n" + myOutput + "\n\nCorrectOutput:\n" + correctOutput);
             // Compare
             Scanner correctScanner, myScanner;
-            correctScanner = new Scanner(correctOutput);
+            correctScanner = new Scanner(correctOutput.trim()+"\n");
             myScanner = new Scanner(myOutput);
             boolean isAC=true;
             if (myOutput.indexOf("CE/RE")==-1) {
