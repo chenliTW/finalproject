@@ -26,6 +26,8 @@ public class executer {
             return executePython(code,input);
         }else if(language.equals("C++")){
             return executeCpp(code,input);
+        }else if(language.equals("Wenyan")){
+            return executeWenyan(code,input);
         }
         return "bad language";
     }
@@ -230,6 +232,67 @@ public class executer {
             }
 
             p.waitFor();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
+    private static String executeWenyan(String code,String input){
+        String ret="";
+        try {
+            File file=new File("./output/cpeclient.wy");
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(code);
+            fileWriter.close();
+
+            ProcessBuilder pb;
+            if(System.getProperty("os.name").equals("Mac OS X")) {
+                return "Mac OS X not supported";
+            }
+
+            pb = new ProcessBuilder(new String[]{"./executils/windows/node/node.exe","./executils/windows/wenyan/index.min.js", "./output/cpeclient.wy"});
+
+            Process p = pb.start();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
+            BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+            writer.write(input);
+            writer.newLine();
+            writer.close();
+
+            String line;
+
+            long now = System.currentTimeMillis();
+            long timeoutInMillis = 1000L * 10;
+            long finish = now + timeoutInMillis;
+
+            while(true) {
+                if ((line = reader.readLine()) != null) {
+                    ret += line+"\n";
+                }else{
+                    ret=ret.trim()+"\n";
+                    break;
+                }
+                if(System.currentTimeMillis() > finish){
+                    p.destroy();
+                    return "TLE\n";
+                }
+            }
+
+            boolean haserror=false;
+
+            while ((line = error.readLine()) != null) {
+                haserror=true;
+                ret+=line;
+            }
+
+            if(haserror){
+                return "CE/RE\n"+ret;
+            }
+
         }catch (Exception e){
             e.printStackTrace();
         }
