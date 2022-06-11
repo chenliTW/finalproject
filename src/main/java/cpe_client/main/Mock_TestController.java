@@ -225,7 +225,9 @@ public class Mock_TestController {
                 judgeResult.setText("CE/RE");
             }
 
-            //JOptionPane.showMessageDialog(null, "送出完成");
+            JFrame jf=new JFrame();
+            jf.setAlwaysOnTop(true);
+            JOptionPane.showMessageDialog(jf, "送出完成");
         });
     }
 }

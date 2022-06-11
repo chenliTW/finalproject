@@ -84,6 +84,11 @@ public class executer {
             long timeoutInMillis = 1000L * 10;
             long finish = now + timeoutInMillis;
 
+            if(!p.waitFor(10, TimeUnit.SECONDS)) {
+                p.destroy();
+                return "TLE\n";
+            }
+
             while(true) {
                 if ((line = reader.readLine()) != null) {
                     ret += line+"\n";
@@ -133,6 +138,11 @@ public class executer {
             long now = System.currentTimeMillis();
             long timeoutInMillis = 1000L * 10;
             long finish = now + timeoutInMillis;
+
+            if(!p.waitFor(10, TimeUnit.SECONDS)) {
+                p.destroy();
+                return "TLE\n";
+            }
 
             while(true) {
                 if ((line = reader.readLine()) != null) {
@@ -220,6 +230,11 @@ public class executer {
             long timeoutInMillis = 1000L * 10;
             long finish = now + timeoutInMillis;
 
+            if(!p.waitFor(10, TimeUnit.SECONDS)) {
+                p.destroy();
+                return "TLE\n";
+            }
+
             while(true) {
                 if ((line = reader.readLine()) != null) {
                     ret += line+"\n";
@@ -270,6 +285,11 @@ public class executer {
             long now = System.currentTimeMillis();
             long timeoutInMillis = 1000L * 10;
             long finish = now + timeoutInMillis;
+
+            if(!p.waitFor(10, TimeUnit.SECONDS)) {
+                p.destroy();
+                return "TLE\n";
+            }
 
             while(true) {
                 if ((line = reader.readLine()) != null) {
@@ -331,6 +351,11 @@ public class executer {
             long now = System.currentTimeMillis();
             long timeoutInMillis = 1000L * 10;
             long finish = now + timeoutInMillis;
+
+            if(!p.waitFor(10, TimeUnit.SECONDS)) {
+                p.destroy();
+                return "TLE\n";
+            }
 
             while(true) {
                 if ((line = reader.readLine()) != null) {
