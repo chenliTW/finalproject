@@ -1,4 +1,5 @@
 package cpe_client.main;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import com.dansoftware.pdfdisplayer.PDFDisplayer;
@@ -16,6 +17,8 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.*;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.asynchttpclient.HttpResponseStatus;
 import org.fife.ui.rsyntaxtextarea.*;
@@ -26,6 +29,9 @@ public class Mock_TestController {
     String nowProblem;
     String[] problems;
     String[][] testcases;
+    int timeleft;
+    int hh, mm, ss;
+
     public static void execute(){
         TrustManager[] trustAllCerts = new TrustManager[] {
                 new X509TrustManager() {
@@ -84,7 +90,7 @@ public class Mock_TestController {
     public VBox othersBox, codingPane;
     public SwingNode codingPaneSwingNode;
     public TextArea inputBox, outputBox;
-    public Label judgeResult;
+    public Label judgeResult, timerLabel;
 
     @FXML
     public void initialize() throws IOException {
@@ -93,6 +99,25 @@ public class Mock_TestController {
         problemSelector.setDisable(true);
         testCaseSelector.setDisable(true);
         inputBox.setDisable(true);
+        timerLabel.setText("請選擇場次後將開始您的模擬考，測驗時間為三小時。");
+        Timer timer = new Timer();
+
+        TimerTask task = new TimerTask() {
+            public void run() {
+                timeleft -= 1;
+                hh = timeleft / 3600;
+                mm = (timeleft % 3600) / 60;
+                ss = timeleft % 60;
+                Platform.runLater(() ->
+                        timerLabel.setText(String.valueOf(hh) + " : " + String.valueOf(mm) + " : " + String.valueOf(ss)));
+                if (timeleft <= 0){
+                    submmitButton.setDisable(true);
+                    Platform.runLater(() ->
+                        judgeResult.setText("考試結束！"));
+                    timer.cancel();
+                }
+            }
+        };
     /* PDF Section */
         PDFDisplayer displayer = new PDFDisplayer();
         splitPane.getItems().addAll(displayer.toNode(), codingPane, othersBox);
@@ -105,11 +130,15 @@ public class Mock_TestController {
         problemSelector.getItems().addAll("Problem 1", "Problem 2", "Problem 3", "Problem 4", "Problem 5", "Problem 6", "Problem 7");
         Mock_TestController.execute();
 
-    /* 選擇場次 */
+    /* 選擇場次 & CountdownTimer */
         examdateSelector.setOnAction((e) -> {
             problems = cpe_client.cpecrawler.test_data.getTestProblems((String) examdateSelector.getValue());
             examdateSelector.setDisable(true);
             problemSelector.setDisable(false);
+
+            /* Countdown Timer */
+            timeleft = 3600*3; //second
+            timer.scheduleAtFixedRate(task,0, 1000); //ms
         });
 
     /* 選擇題目*/
@@ -149,8 +178,6 @@ public class Mock_TestController {
             }
         });
     /* 選擇測資 */
-
-
         testCaseSelector.getItems().addAll("自訂測資", "官方測資 A", "官方測資 B");
         testCaseSelector.setOnAction((e) -> {
             testcases = cpe_client.cpecrawler.test_data.getProblemTestCases(nowProblem);
@@ -187,7 +214,6 @@ public class Mock_TestController {
 
         submmitButton.setOnAction((e) -> {
             String correctOutput, myOutput;
-
             if (testCaseSelector.getValue().equals("官方測資 A")){
                 correctOutput = testcases[0][1];
             }else if (testCaseSelector.getValue().equals("官方測資 B")){

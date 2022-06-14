@@ -99,7 +99,7 @@
             </VBox>
             <VBox fx:id="othersBox" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="456.0" prefWidth="208.0" spacing="5.0">
                <children>
-                  <Label fx:id="timer" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="4.0" prefWidth="634.0" text="timer" textAlignment="CENTER">
+                  <Label fx:id="timerLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="4.0" prefWidth="634.0" text="timer" textAlignment="CENTER">
                      <font>
                         <Font size="23.0" />
                      </font>
