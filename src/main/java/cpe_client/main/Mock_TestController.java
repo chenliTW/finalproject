@@ -81,7 +81,7 @@ public class Mock_TestController {
 
     @FXML
     protected void onSubmitButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+        //welcomeText.setText("Welcome to JavaFX Application!");
     }
     @FXML
     public ComboBox problemSelector, examdateSelector, testCaseSelector, languageSelector;
@@ -178,8 +178,9 @@ public class Mock_TestController {
             }
         });
     /* 選擇測資 */
-        testCaseSelector.getItems().addAll("自訂測資", "官方測資 A", "官方測資 B");
+        testCaseSelector.getItems().addAll("自訂測資", "官方測資 A", "官方測資 B", "正式評測");
         testCaseSelector.setOnAction((e) -> {
+            outputBox.setText("");
             testcases = cpe_client.cpecrawler.test_data.getProblemTestCases(nowProblem);
             if (testCaseSelector.getValue().equals("自訂測資")){
                 inputBox.setEditable(true);
@@ -190,6 +191,9 @@ public class Mock_TestController {
             } else if (testCaseSelector.getValue().equals("官方測資 B")){
                 inputBox.setEditable(false);
                 inputBox.setText(testcases[1][0]);
+            }else if (testCaseSelector.getValue().toString().equals("正式評測")){
+                inputBox.setEditable(false);
+                inputBox.setText("");
             }
         });
     /* othersButton */
@@ -213,14 +217,22 @@ public class Mock_TestController {
         languageSelector.getItems().addAll("C++", "Java", "Python","Wenyan","JsFxxk");
 
         submmitButton.setOnAction((e) -> {
-            String correctOutput, myOutput;
+            String correctOutput="", myOutput="";
             if (testCaseSelector.getValue().equals("官方測資 A")){
                 correctOutput = testcases[0][1];
             }else if (testCaseSelector.getValue().equals("官方測資 B")){
                 correctOutput = testcases[1][1];
-            }else{
+            }else if (testCaseSelector.getValue().equals("自訂測資")){
                 correctOutput = cpe_client.localjudge.executer.execute(cpe_client.cpecrawler.test_data.
                         getAcceptCode(nowProblem), "C++", inputBox.getText());
+            }else if (testCaseSelector.getValue().equals("正式評測")){
+                try {
+                    cpe_client.uvacrawler.account.cookie = cpe_client.uvacrawler.account.loginAndGetCookie();
+                    judgeResult.setText(cpe_client.uvacrawler.oj.getResultById(cpe_client.uvacrawler.oj.submitCodeAndReturnId(textArea.getText() ,nowProblem, languageSelector.getValue().toString())));
+                }catch (Exception ee){
+                    outputBox.setText(ee.getStackTrace().toString());
+                }
+                return;
             }
             myOutput = cpe_client.localjudge.executer.execute(textArea.getText(), languageSelector.getValue().toString(), inputBox.getText());
             outputBox.setText("Your Output:\n\n" + myOutput + "\n\nCorrectOutput:\n" + correctOutput);

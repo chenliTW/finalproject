@@ -23,11 +23,11 @@ public class oj {
          */
         String languageId="";
 
-        if(language.equals("c++")){
+        if(language.equals("C++")){
             languageId="3";
-        }else if(language.equals("java")){
+        }else if(language.equals("Java")){
             languageId="2";
-        }else if(language.equals("python")){
+        }else if(language.equals("Python")){
             languageId="6";
         }
 
