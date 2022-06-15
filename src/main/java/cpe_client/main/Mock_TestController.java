@@ -74,18 +74,21 @@ public class Mock_TestController {
     }
 
     @FXML
-    private Label welcomeText;
-
-    @FXML
     public static ComboBox testDataSelector;
 
     @FXML
     protected void onSubmitButtonClick() {
         //welcomeText.setText("Welcome to JavaFX Application!");
     }
+
+    @FXML
+    protected void onBackButtonClick() {
+        MainGui.currentStage.setScene(MainGui.menuScene);
+    }
+
     @FXML
     public ComboBox problemSelector, examdateSelector, testCaseSelector, languageSelector;
-    public Button othersSwitch, submmitButton;
+    public Button othersSwitch, submitButton, backButton;
     public SplitPane splitPane;
     public VBox othersBox, codingPane;
     public SwingNode codingPaneSwingNode;
@@ -111,7 +114,7 @@ public class Mock_TestController {
                 Platform.runLater(() ->
                         timerLabel.setText(String.valueOf(hh) + " : " + String.valueOf(mm) + " : " + String.valueOf(ss)));
                 if (timeleft <= 0){
-                    submmitButton.setDisable(true);
+                    submitButton.setDisable(true);
                     Platform.runLater(() ->
                         judgeResult.setText("考試結束！"));
                     timer.cancel();
@@ -216,7 +219,7 @@ public class Mock_TestController {
         /* Submmit Code and Compile */
         languageSelector.getItems().addAll("C++", "Java", "Python","Wenyan","JsFxxk");
 
-        submmitButton.setOnAction((e) -> {
+        submitButton.setOnAction((e) -> {
             String correctOutput="", myOutput="";
             if (testCaseSelector.getValue().equals("官方測資 A")){
                 correctOutput = testcases[0][1];

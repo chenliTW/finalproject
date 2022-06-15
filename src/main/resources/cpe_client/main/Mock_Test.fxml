@@ -110,7 +110,7 @@
                   <TextArea fx:id="inputBox" prefHeight="200.0" prefWidth="200.0" promptText="輸入" />
                   <TextArea fx:id="outputBox" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="執行結果" />
                   <ComboBox fx:id="languageSelector" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="152.0" promptText="選擇語言" />
-                  <Button fx:id="submmitButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#onSubmitButtonClick" text="送出" />
+                  <Button fx:id="submitButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#onSubmitButtonClick" text="送出" />
                   <Label fx:id="judgeResult" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="74.0" prefWidth="165.0" text="judgeResult" textAlignment="CENTER">
                      <font>
                         <Font name="Consolas Bold" size="28.0" />
@@ -134,6 +134,7 @@
           </textFill>
         </Label>
         <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+            <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#onBackButtonClick" text="返回" />
             <Button fx:id="othersSwitch" mnemonicParsing="false" text="操作區開關" />
       </children>
       <padding>
