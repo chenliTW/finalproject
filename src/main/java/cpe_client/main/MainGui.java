@@ -1,11 +1,13 @@
 package cpe_client.main;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Random;
 
 public class MainGui extends Application {
     public static Stage currentStage;
@@ -27,6 +29,11 @@ public class MainGui extends Application {
     }
 
     public static void main(String[] args){
+        new Thread() {
+            public void run() {
+                cpe_client.uvacrawler.account.loginAndGetCookie();
+            }
+        }.start();
         launch();
     }
 }

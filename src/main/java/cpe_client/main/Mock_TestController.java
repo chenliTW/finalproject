@@ -227,8 +227,15 @@ public class Mock_TestController {
                         getAcceptCode(nowProblem), "C++", inputBox.getText());
             }else if (testCaseSelector.getValue().equals("正式評測")){
                 try {
-                    cpe_client.uvacrawler.account.cookie = cpe_client.uvacrawler.account.loginAndGetCookie();
-                    judgeResult.setText(cpe_client.uvacrawler.oj.getResultById(cpe_client.uvacrawler.oj.submitCodeAndReturnId(textArea.getText() ,nowProblem, languageSelector.getValue().toString())));
+                    //cpe_client.uvacrawler.account.cookie = cpe_client.uvacrawler.account.loginAndGetCookie();
+                    String id=cpe_client.uvacrawler.oj.submitCodeAndReturnId(textArea.getText() ,nowProblem, languageSelector.getValue().toString());
+                    String res="";
+                    while(true){
+                        Thread.sleep(100);
+                        res=cpe_client.uvacrawler.oj.getResultById(id);
+                        if(!res.equals("In judge queue"))break;
+                    }
+                    judgeResult.setText(res);
                 }catch (Exception ee){
                     outputBox.setText(ee.getStackTrace().toString());
                 }
