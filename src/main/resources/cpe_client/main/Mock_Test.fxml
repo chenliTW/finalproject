@@ -110,12 +110,49 @@
                   <TextArea fx:id="inputBox" prefHeight="200.0" prefWidth="200.0" promptText="輸入" />
                   <TextArea fx:id="outputBox" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="執行結果" />
                   <ComboBox fx:id="languageSelector" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="152.0" promptText="選擇語言" />
-                  <Button fx:id="submitButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#onSubmitButtonClick" text="送出" />
-                  <Label fx:id="judgeResult" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="74.0" prefWidth="165.0" text="judgeResult" textAlignment="CENTER">
-                     <font>
-                        <Font name="Consolas Bold" size="28.0" />
-                     </font>
-                  </Label>
+                  <Button fx:id="submitButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="送出" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Label fx:id="result1" text="1">
+                           <font>
+                              <Font name="System Bold" size="35.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="result2" text="2">
+                           <font>
+                              <Font name="System Bold" size="35.0" />
+                           </font>
+                        </Label>
+                         <Label fx:id="result3" text="3">
+                             <font>
+                                 <Font name="System Bold" size="35.0" />
+                             </font>
+                         </Label>
+                         <Label fx:id="result4" text="4">
+                             <font>
+                                 <Font name="System Bold" size="35.0" />
+                             </font>
+                         </Label>
+                         <Label fx:id="result5" text="5">
+                             <font>
+                                 <Font name="System Bold" size="35.0" />
+                             </font>
+                         </Label>
+                         <Label fx:id="result6" text="6">
+                             <font>
+                                 <Font name="System Bold" size="35.0" />
+                             </font>
+                         </Label>
+                         <Label fx:id="result7" text="7">
+                             <font>
+                                 <Font name="System Bold" size="35.0" />
+                             </font>
+                         </Label>
+                     </children>
+                     <opaqueInsets>
+                        <Insets right="10.0" />
+                     </opaqueInsets>
+                  </HBox>
                </children>
                <opaqueInsets>
                   <Insets />

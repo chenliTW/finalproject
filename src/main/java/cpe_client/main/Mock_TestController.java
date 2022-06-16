@@ -74,26 +74,19 @@ public class Mock_TestController {
     }
 
     @FXML
-    public static ComboBox testDataSelector;
-
-    @FXML
-    protected void onSubmitButtonClick() {
-        //welcomeText.setText("Welcome to JavaFX Application!");
-    }
-
-    @FXML
     protected void onBackButtonClick() {
         MainGui.currentStage.setScene(MainGui.menuScene);
     }
 
     @FXML
-    public ComboBox problemSelector, examdateSelector, testCaseSelector, languageSelector;
+    public ComboBox problemSelector, examDateSelector, testCaseSelector, languageSelector;
     public Button othersSwitch, submitButton, backButton;
     public SplitPane splitPane;
     public VBox othersBox, codingPane;
     public SwingNode codingPaneSwingNode;
     public TextArea inputBox, outputBox;
-    public Label judgeResult, timerLabel;
+    public Label result;
+    public Label result1, result2, result3, result4, result5, result6, result7, timerLabel;
 
     @FXML
     public void initialize() throws IOException {
@@ -127,16 +120,16 @@ public class Mock_TestController {
         String[] examdates = cpe_client.cpecrawler.test_data.getHistoryTestDates();
 
         for (int i = examdates.length-2; i >= examdates.length-16; i--){
-            examdateSelector.getItems().add(examdates[i].substring(0,examdates[i].length()-1));
+            examDateSelector.getItems().add(examdates[i].substring(0,examdates[i].length()-1));
         }
 
         problemSelector.getItems().addAll("Problem 1", "Problem 2", "Problem 3", "Problem 4", "Problem 5", "Problem 6", "Problem 7");
         Mock_TestController.execute();
 
     /* 選擇場次 & CountdownTimer */
-        examdateSelector.setOnAction((e) -> {
-            problems = cpe_client.cpecrawler.test_data.getTestProblems((String) examdateSelector.getValue());
-            examdateSelector.setDisable(true);
+        examDateSelector.setOnAction((e) -> {
+            problems = cpe_client.cpecrawler.test_data.getTestProblems((String) examDateSelector.getValue());
+            examDateSelector.setDisable(true);
             problemSelector.setDisable(false);
 
             /* Countdown Timer */
