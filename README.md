@@ -8,8 +8,15 @@ CPE Client
 主要有兩大功能 : 自動報名跟模擬考。
 
 #### 自動報名
-<iframe src="https://giphy.com/embed/x2CYwZ3Bo8lEPsUe3L" width="720" height="450" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+[![autoSignUpDEMO](https://res.cloudinary.com/marcomontalbano/image/upload/v1655345520/video_to_markdown/images/youtube--Flms0iq1uvQ-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=Flms0iq1uvQ "autoSignUpDEMO")
 
 #### 模擬考
 模擬考能讓使用者選擇要考的場次、題目，以及新增了測資自訂的功能。
 ![img](https://upload.cc/i1/2022/06/15/fC0PuV.png)
+
+## 分工
+陳立: Crawler, algorithm
+
+廖健揚: Controller
+
+蔡淵丞: UI, README
