@@ -91,6 +91,8 @@ public class Mock_TestController {
     @FXML
     public void initialize() throws IOException {
     /* Init */
+        JFrame jf=new JFrame();
+        jf.setAlwaysOnTop(true);
         splitPane.getItems().removeAll(codingPane, othersBox);
         problemSelector.setDisable(true);
         testCaseSelector.setDisable(true);
@@ -108,8 +110,7 @@ public class Mock_TestController {
                         timerLabel.setText(String.valueOf(hh) + " : " + String.valueOf(mm) + " : " + String.valueOf(ss)));
                 if (timeleft <= 0){
                     submitButton.setDisable(true);
-                    Platform.runLater(() ->
-                        judgeResult.setText("考試結束！"));
+                    Platform.runLater(() -> JOptionPane.showMessageDialog(jf, "時間到，考試結束！"));
                     timer.cancel();
                 }
             }
@@ -223,7 +224,6 @@ public class Mock_TestController {
                         getAcceptCode(nowProblem), "C++", inputBox.getText());
             }else if (testCaseSelector.getValue().equals("正式評測")){
                 try {
-                    //cpe_client.uvacrawler.account.cookie = cpe_client.uvacrawler.account.loginAndGetCookie();
                     String id=cpe_client.uvacrawler.oj.submitCodeAndReturnId(textArea.getText() ,nowProblem, languageSelector.getValue().toString());
                     String res="";
                     while(true){
@@ -231,7 +231,7 @@ public class Mock_TestController {
                         res=cpe_client.uvacrawler.oj.getResultById(id);
                         if(!res.equals("In judge queue"))break;
                     }
-                    judgeResult.setText(res);
+                    JOptionPane.showMessageDialog(jf, res);
                 }catch (Exception ee){
                     outputBox.setText(ee.getStackTrace().toString());
                 }
@@ -254,20 +254,17 @@ public class Mock_TestController {
                     }
                 }
                 if (isAC) {
-                    judgeResult.setText("AC");
+                    JOptionPane.showMessageDialog(jf, "Accepted!");
                 } else {
                     if (myOutput.indexOf("TLE") == 0) {
-                        judgeResult.setText("TLE");
+                        JOptionPane.showMessageDialog(jf, "Time Limit Exceeded");
                     }else{
-                        judgeResult.setText("WA");
+                        JOptionPane.showMessageDialog(jf, "Wrong Answer");
                     }
                 }
             }else{
-                judgeResult.setText("CE/RE");
+                JOptionPane.showMessageDialog(jf, "CE/RE");
             }
-
-            JFrame jf=new JFrame();
-            jf.setAlwaysOnTop(true);
             JOptionPane.showMessageDialog(jf, "送出完成");
         });
     }

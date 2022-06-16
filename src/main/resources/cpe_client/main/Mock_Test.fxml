@@ -104,7 +104,7 @@
                         <Font size="23.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="examdateSelector" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="187.0" promptText="選擇場次" />
+                  <ComboBox fx:id="examDateSelector" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="187.0" promptText="選擇場次" />
                   <ComboBox fx:id="problemSelector" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="187.0" promptText="選擇題目" />
                   <ComboBox fx:id="testCaseSelector" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="188.0" promptText="選擇測資" />
                   <TextArea fx:id="inputBox" prefHeight="200.0" prefWidth="200.0" promptText="輸入" />

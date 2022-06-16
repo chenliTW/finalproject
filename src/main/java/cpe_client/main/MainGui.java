@@ -18,7 +18,6 @@ public class MainGui extends Application {
         FXMLLoader menuFxmlLoader = new FXMLLoader(MainGui.class.getResource("Main_Menu.fxml"));
         FXMLLoader mockTestFxmlLoader = new FXMLLoader(MainGui.class.getResource("Mock_test.fxml"));
         FXMLLoader autoSignUpFxmlLoader = new FXMLLoader(MainGui.class.getResource("Auto_Sign_Up.fxml"));
-        // Mock_TestController.testDataSelector.getItems().addAll("官方測資A", "官方測資B", "自訂測資");
         menuScene = new Scene(menuFxmlLoader.load(), 600, 400);
         mockTestScene = new Scene(mockTestFxmlLoader.load(), 850, 600);
         autoSignUpScene = new Scene(autoSignUpFxmlLoader.load(), 850, 600);
