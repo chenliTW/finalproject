@@ -6,7 +6,6 @@ import com.dansoftware.pdfdisplayer.PDFDisplayer;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javax.net.ssl.*;
 import javax.swing.*;
@@ -19,8 +18,6 @@ import java.security.cert.*;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import org.asynchttpclient.HttpResponseStatus;
 import org.fife.ui.rsyntaxtextarea.*;
 import javafx.embed.swing.SwingNode;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -215,6 +212,7 @@ public class Mock_TestController {
 
         submitButton.setOnAction((e) -> {
             String correctOutput="", myOutput="";
+            outputBox.setText("");
             if (testCaseSelector.getValue().equals("官方測資 A")){
                 correctOutput = testcases[0][1];
             }else if (testCaseSelector.getValue().equals("官方測資 B")){
@@ -231,9 +229,31 @@ public class Mock_TestController {
                         res=cpe_client.uvacrawler.oj.getResultById(id);
                         if(!res.equals("In judge queue"))break;
                     }
-                    JOptionPane.showMessageDialog(jf, res);
+                    if (res.equals("Accepted")){
+                        String ACproblem = problemSelector.getValue().toString().replace("Problem ", "");
+                        if (ACproblem.equals("1")){
+                            result1.setTextFill(Color.GREEN);
+                        }else if (ACproblem.equals("2")){
+                            result2.setTextFill(Color.GREEN);
+                        }else if (ACproblem.equals("3")){
+                            result3.setTextFill(Color.GREEN);
+                        }else if (ACproblem.equals("4")){
+                            result4.setTextFill(Color.GREEN);
+                        }else if (ACproblem.equals("5")){
+                            result5.setTextFill(Color.GREEN);
+                        }else if (ACproblem.equals("6")){
+                            result6.setTextFill(Color.GREEN);
+                        }else if (ACproblem.equals("7")){
+                            result7.setTextFill(Color.GREEN);
+                        }
+                        res += "!";
+                    }
+                    if (res.length() <= 20)
+                        JOptionPane.showMessageDialog(jf, res);
+                    else
+                        JOptionPane.showMessageDialog(jf, " Compile error");
                 }catch (Exception ee){
-                    outputBox.setText(ee.getStackTrace().toString());
+                    outputBox.setText("發生錯誤！ 請檢查您的網路連線是否正常 或 UVa官網是否正常運行。");
                 }
                 return;
             }
@@ -265,7 +285,6 @@ public class Mock_TestController {
             }else{
                 JOptionPane.showMessageDialog(jf, "CE/RE");
             }
-            JOptionPane.showMessageDialog(jf, "送出完成");
         });
     }
 }
