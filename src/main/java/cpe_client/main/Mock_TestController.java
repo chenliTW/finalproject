@@ -232,19 +232,19 @@ public class Mock_TestController {
                     if (res.equals("Accepted")){
                         String ACproblem = problemSelector.getValue().toString().replace("Problem ", "");
                         if (ACproblem.equals("1")){
-                            result1.setTextFill(Color.GREEN);
+                            result1.setTextFill(javafx.scene.paint.Paint.valueOf("55FF55"));
                         }else if (ACproblem.equals("2")){
-                            result2.setTextFill(Color.GREEN);
+                            result2.setTextFill(javafx.scene.paint.Paint.valueOf("55FF55"));
                         }else if (ACproblem.equals("3")){
-                            result3.setTextFill(Color.GREEN);
+                            result3.setTextFill(javafx.scene.paint.Paint.valueOf("55FF55"));
                         }else if (ACproblem.equals("4")){
-                            result4.setTextFill(Color.GREEN);
+                            result4.setTextFill(javafx.scene.paint.Paint.valueOf("55FF55"));
                         }else if (ACproblem.equals("5")){
-                            result5.setTextFill(Color.GREEN);
+                            result5.setTextFill(javafx.scene.paint.Paint.valueOf("55FF55"));
                         }else if (ACproblem.equals("6")){
-                            result6.setTextFill(Color.GREEN);
+                            result6.setTextFill(javafx.scene.paint.Paint.valueOf("55FF55"));
                         }else if (ACproblem.equals("7")){
-                            result7.setTextFill(Color.GREEN);
+                            result7.setTextFill(javafx.scene.paint.Paint.valueOf("55FF55"));
                         }
                         res += "!";
                     }
